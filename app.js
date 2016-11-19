@@ -23,8 +23,10 @@ app.get('/', function (req, res) {
 	res.send('OK');
 });
 
+
 app.get('/reddit/get/:subreddit', reddit.getArticles);
 app.post('/reddit/like', reddit.likeArticle)
+
 
 // Start server
 app.listen(PORT, function () {
