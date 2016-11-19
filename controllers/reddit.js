@@ -17,18 +17,23 @@ var subreddits = [
 ];
 
 reddit.getArticles = function (req, res) {
+	var db = req.db;
+
 	Promise.map(subreddits, function (subreddit) {
 		return new Promise(function (resolve, reject) {
 			parser.parseURL('https://www.reddit.com/r/' + subreddit + '.rss', function(err, parsed) {
 				if (err) {
 					reject();
 				} else {
-					resolve(parsed);
+					resolve({
+						subreddit: subreddit,
+						parsed: parsed
+					});
 				}
 			});
 		});
 	}).then(function (parsed) {
-		res.send("done..." + parsed.size());
+		
 	});
 
 	/*
