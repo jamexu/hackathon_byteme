@@ -50,13 +50,3 @@ function newToast(){
     }
 
 }
-
-// setTimeout(function(){
-//     console.log("in timer");
-//     if(globalToastCounter <10){
-//         console.log("toast number: " + globalToastCounter);
-//         globalToastCounter ++;
-//         newToast("new toast" + globalToastCounter);
-//         console.log("toasting");
-//     }
-// }, 5000);
