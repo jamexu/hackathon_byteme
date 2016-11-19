@@ -3,11 +3,14 @@
 	"version": "1.0.0",
 	"main": "app.js",
 	"scripts": {
-		"start": "node app.js"
+		"start": "node node_modules/nodemon/bin/nodemon.js"
 	},
 	"dependencies": {
 		"express": "4.14.0",
 		"rss-parser": "2.5.2",
 		"lowdb": "0.14.0"
+	},
+	"devDependencies": {
+		"nodemon": "1.11.0"
 	}
 }
