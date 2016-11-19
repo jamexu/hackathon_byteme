@@ -23,8 +23,7 @@ app.get('/', function (req, res) {
 	res.send('OK');
 });
 
-
-app.get('/reddit/get/:subreddit', reddit.getArticles);
+app.get('/reddit/get', reddit.getArticles);
 app.post('/reddit/score', reddit.scoreArticle)
 
 

@@ -1,4 +1,6 @@
 var parser = require('rss-parser');
+var Promise = require('bluebird');
+var _ = require('underscore');
 var reddit = {};
 
 var subreddits = [
@@ -15,6 +17,21 @@ var subreddits = [
 ];
 
 reddit.getArticles = function (req, res) {
+	Promise.map(subreddits, function (subreddit) {
+		return new Promise(function (resolve, reject) {
+			parser.parseURL('https://www.reddit.com/r/' + subreddit + '.rss', function(err, parsed) {
+				if (err) {
+					reject();
+				} else {
+					resolve(parsed);
+				}
+			});
+		});
+	}).then(function (parsed) {
+		res.send("done..." + parsed.size());
+	});
+
+	/*
 	title = "WELCOME TO /r/" + req.params.subreddit
 
 	parser.parseURL('https://www.reddit.com/r/' + req.params.subreddit + '.rss', function(err, parsed) {
@@ -41,7 +58,7 @@ reddit.getArticles = function (req, res) {
 			}
 		});
 		res.send(title + '<br>Parsed ' + count + ' images. <br><br>' + largeString);
-	});
+	});*/
 };
 
 reddit.scoreArticle = function (req, res) {
