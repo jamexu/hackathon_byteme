@@ -1,0 +1,55 @@
+h1{
+    text-align: center;
+}
+body{
+    margin: 5em;
+}
+.cloud{
+    color: darkblue;
+  text-align: center;
+  /* Same trick as previsouly used to make circles */
+  box-sizing: border-box;
+  width     : 150px;
+  height    : 150px;
+  padding   : 80px 1em 0 1em;
+
+  /* We make room for the "ears" of our cloud */
+  margin    : 0 100px;
+
+  position: relative;
+
+  background-color: #A4C9CF;
+
+  /* Well, actually we are not making a full circle
+     as we want the bottom of our cloud to be flat.
+     Feel free to tweak this example to make a cloud
+     that isn't flat at the bottom ;) */
+  border-radius: 100% 100% 0 0;
+}
+
+.hugeSection{
+    height: 1000px;
+}
+#toast-container{
+    margin-top: 10em ;
+    width: 100%;
+}
+
+#toast-container .toast {
+    cursor: pointer;
+    font-size: 3em;
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 20px;
+    color: #2b3e50;
+    width: 90%;
+    margin: 40px;
+}
+h2{
+    text-align: center !important;
+}
+.ui-focus {
+ -moz-box-shadow: none !important;
+ -webkit-box-shadow: none !important;
+ box-shadow: none !important;
+}
