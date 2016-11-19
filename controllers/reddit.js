@@ -5,7 +5,11 @@ reddit.getArticles = function (req, res) {
 	title = "WELCOME TO /r/" + req.params.subreddit
 	console.log(title)
 
-	parser.parseURL('https://www.reddit.com/.rss', function(err, parsed) {
+	parser.parseURL('https://www.reddit.com/r/' + req.params.subreddit + '.rss', function(err, parsed) {
+		if (err) {
+			console.log('Error: ' + err);
+			return;
+		}
 		  largeString = ''
 			count = 0
 			parsed.feed.entries.forEach(function(entry) {
