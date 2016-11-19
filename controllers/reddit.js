@@ -19,6 +19,42 @@ var subreddits = [
 reddit.getArticles = function (req, res) {
 	var db = req.db;
 
+	// SHIFT SCORE
+	var scores = db.get('scores').value();
+	var min = _.min(_.map(subreddits, function (subreddit) {
+		var score = db.get('scores.' + subreddit).value();
+		if (!isNumber(score)) {
+			score = 0;
+		}
+		return score;
+	}));
+
+	var floor = 0;
+	if (min <= 0) {
+		floor = -1 * min + 1;
+	}
+
+	var histogram = _.flatten(_.map(subreddits, function (subreddit) {
+		var arr = []
+		var score = db.get('scores.' + subreddit).value();
+
+		if (!isNumber(score)) {
+			score = 0;
+		}
+
+		score += floor;
+
+		// BUILD ARRAY
+		for (i = 0; i < score; i++)
+		{
+			arr.push(subreddit)
+		}
+		return arr
+	}));
+
+	console.log(histogram)
+
+
 	Promise.map(subreddits, function (subreddit) {
 		return new Promise(function (resolve, reject) {
 			parser.parseURL('https://www.reddit.com/r/' + subreddit + '.rss', function(err, parsed) {
@@ -33,7 +69,7 @@ reddit.getArticles = function (req, res) {
 			});
 		});
 	}).then(function (parsed) {
-		
+
 	});
 
 	/*
