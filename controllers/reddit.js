@@ -6,21 +6,26 @@ reddit.getArticles = function (req, res) {
 	console.log(title)
 
 	parser.parseURL('https://www.reddit.com/.rss', function(err, parsed) {
-			// console.log(parsed.feed.title);
-			// parsed.feed.entries.forEach(function(entry) {
-			// 		console.log(entry.title + ':' + entry.link);
-			// })
+		  largeString = ''
+			count = 0
 			parsed.feed.entries.forEach(function(entry) {
-					console.log(entry.title)
-					console.log(entry.link)
-
+					var pattern = /https:\/\/a\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
+					if (pattern.test(entry.content)) {
+						  count += 1
+							// console.log('Title: ' + entry.title)
+							largeString += entry.title + '<br>'
+							var img = entry.content.match(pattern);
+							// console.log('img: ' + img)
+							largeString += img + '<br><br>'
+					}
 			})
+			res.send('Parsed ' + count + ' images. <br><br>' + largeString)
 	})
 
 };
 
 reddit.likeArticle = function (req, res) {
-	
+
 };
 
 module.exports = reddit;
