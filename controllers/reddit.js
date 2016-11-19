@@ -1,6 +1,19 @@
 var parser = require('rss-parser');
 var reddit = {};
 
+var subreddits = [
+	"aww",
+	"funny",
+	"mildlyinteresting",
+	"gifs",
+	"earthporn",
+	"wallpapers",
+	"cityporn",
+	"MostBeautiful",
+	"pics",
+	"lolcats"
+];
+
 reddit.getArticles = function (req, res) {
 	title = "WELCOME TO /r/" + req.params.subreddit
 
