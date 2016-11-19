@@ -33,8 +33,22 @@ reddit.getArticles = function (req, res) {
 
 };
 
-reddit.likeArticle = function (req, res) {
+reddit.scoreArticle = function (req, res) {
+	var subreddit = req.body.subreddit;
+	var score = req.body.score;
+	var prevScore = req.db.get('scores.' + subreddit).value();
 
+	if (isNumber(prevScore)) {
+		score += prevScore;
+	}
+
+	req.db.set('scores.' + subreddit, score).value();
+
+	res.send('OK');
 };
+
+function isNumber(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 module.exports = reddit;

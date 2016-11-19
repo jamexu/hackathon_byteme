@@ -1,5 +1,6 @@
 var express = require('express');
 var low = require('lowdb');
+var bodyParser = require('body-parser');
 var reddit = require('./controllers/reddit');
 
 var app = express();
@@ -8,11 +9,10 @@ var PORT = 8080;
 // Setup DB
 const db = low('db.json');
 db.defaults({
-	likes: {},
-	dislikes: {}
+	scores: {}
 }).value();
 
-// Add DB to middleware
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	req.db = db;
 	next();
@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
 
 
 app.get('/reddit/get/:subreddit', reddit.getArticles);
-app.post('/reddit/like', reddit.likeArticle)
+app.post('/reddit/score', reddit.scoreArticle)
 
 
 // Start server
