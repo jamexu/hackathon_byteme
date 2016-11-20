@@ -3,6 +3,25 @@ var left;
 var isLeft;
 var touchLeft
 <<<<<<< HEAD
+$( document ).ready(function() {
+    Materialize.toast("First toast",999999999,'', function(){newToast();});
+    $.mobile.hidePageLoadingMsg();
+    $.mobile.ajaxEnabled = false; 
+    $.mobile.pageLoading();
+});
+
+
+
+$( document ).ready(function() {
+    Materialize.toast("First toast",999999999,'', function(){newToast();});
+});
+
+ 
+<<<<<<< HEAD
+var globalToastCounter = 0;
+var left;
+var isLeft;
+var touchLeft
 <<<<<<< HEAD
 $( document ).ready(function() {
     Materialize.toast("First toast",999999999,'', function(){newToast();});
@@ -12,19 +31,13 @@ $( document ).ready(function() {
 });
 
 
-=======
-=======
->>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 
 $( document ).ready(function() {
     Materialize.toast("First toast",999999999,'', function(){newToast();});
 });
 
  
-<<<<<<< HEAD
->>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
-=======
->>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
+
 globalToastCounter++;
 $( "#toast-container" ).mousedown(function() {
     left = $(".toast").offset().left;
@@ -67,8 +80,6 @@ function newToast(){
     }
 
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 // setTimeout(function(){
 //     console.log("in timer");
@@ -79,7 +90,3 @@ function newToast(){
 //         console.log("toasting");
 //     }
 // }, 5000);
-=======
->>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
-=======
->>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4

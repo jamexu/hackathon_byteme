@@ -5,6 +5,7 @@ var reddit = {};
 
 var subreddits = [
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"MostBeautiful",
 	"pics",
 	"lolcats",
@@ -17,6 +18,8 @@ var subreddits = [
 	"animalsbeingjerks",
 =======
 >>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
+=======
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 	"aww",
 	"funny",
 	"mildlyinteresting",
@@ -25,6 +28,7 @@ var subreddits = [
 	"wallpapers",
 	"cityporn",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"upsetcats",
 	"malelivingspace",
 	"cemeteryporn",
@@ -32,6 +36,11 @@ var subreddits = [
 	"architectureporn",
 	"culinaryporn",
 	"toolporn"
+=======
+	"MostBeautiful",
+	"pics",
+	"lolcats"
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 =======
 	"MostBeautiful",
 	"pics",
