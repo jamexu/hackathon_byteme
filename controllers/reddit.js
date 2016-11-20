@@ -55,7 +55,6 @@ reddit.getArticles = function (req, res) {
 	_.each(subreddits, function (subreddit) {
 		indexes[subreddit] = 0;
 	});
-	console.log(indexes);
 
 	// Get Subreddit RSS
 	Promise.map(subreddits, function (subreddit) {
@@ -94,7 +93,10 @@ reddit.getArticles = function (req, res) {
 			});
 		});
 	}).then(function (parsed) {
-
+		min = 0;
+		max = histogram.length
+		randInt = Math.floor(Math.random() * (max - min + 1)) + min;
+		console.log('randInt ' + randInt)
 	});
 };
 
