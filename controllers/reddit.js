@@ -63,7 +63,7 @@ reddit.getArticles = function (req, res) {
 				if (err) {
 					reject();
 				} else {
-					var data = _.map(parsed.feed.entries, function (entry) {
+					var data = _.reject(_.map(parsed.feed.entries, function (entry) {
 						var img = null;
 
 						var gifv_pattern = /http:\/\/i\.imgur\.com\/(\w|_|-)+\.gifv/g;
@@ -79,11 +79,17 @@ reddit.getArticles = function (req, res) {
 							}
 						}
 
+						if (!img) {
+							return null;
+						}
+
 						return {
 							title: entry.title,
 							url: entry.link,
-							img: img ? img[0] : null
+							img: img[0]
 						}
+					}), function (item) {
+						return item === null;
 					});
 
 					resolve({
