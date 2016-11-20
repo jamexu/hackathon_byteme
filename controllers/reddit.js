@@ -4,6 +4,7 @@ var _ = require('underscore');
 var reddit = {};
 
 var subreddits = [
+<<<<<<< HEAD
 	"MostBeautiful",
 	"pics",
 	"lolcats",
@@ -14,6 +15,8 @@ var subreddits = [
 	"lol",
 	"actuallyfunny",
 	"animalsbeingjerks",
+=======
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 	"aww",
 	"funny",
 	"mildlyinteresting",
@@ -21,6 +24,7 @@ var subreddits = [
 	"earthporn",
 	"wallpapers",
 	"cityporn",
+<<<<<<< HEAD
 	"upsetcats",
 	"malelivingspace",
 	"cemeteryporn",
@@ -28,6 +32,11 @@ var subreddits = [
 	"architectureporn",
 	"culinaryporn",
 	"toolporn"
+=======
+	"MostBeautiful",
+	"pics",
+	"lolcats"
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 ];
 
 reddit.getArticles = function (req, res) {
