@@ -104,16 +104,24 @@ reddit.getArticles = function (req, res) {
 		return subreddits;
 
 	}).then(function (subreddits) {
-		min = 0;
-		max = histogram.length;
-		randInt = Math.floor(Math.random() * (max - min + 1)) + min;
-		currentSubreddit = histogram[randInt];
-		data = subreddits[currentSubreddit]
+		var data = [];
 
-		// console.log('randInt ' + randInt);
-		// console.log('histogram ' + histogram);
-		// console.log('current Subreddit ' + currentSubreddit)
-		// console.log('data ', data)
+		while (true) {
+			var min = 0;
+			var max = histogram.length - 1;
+			var randInt = Math.floor(Math.random() * (max - min + 1)) + min;
+			var currentSubreddit = histogram[randInt];
+			var index = indexes[currentSubreddit];
+			var item = subreddits[currentSubreddit][index];
+
+			if (!item) {
+				break;
+			}
+			indexes[currentSubreddit]++;
+			data.push(item);
+		}
+
+		res.send(data);
 	});
 };
 
