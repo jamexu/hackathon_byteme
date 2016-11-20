@@ -44,14 +44,20 @@ reddit.getArticles = function (req, res) {
 
 		score += floor;
 
-		// BUILD ARRAY
-		for (i = 0; i < score; i++)
-		{
+		for (i = 0; i < score; i++) {
 			arr.push(subreddit)
 		}
 		return arr
 	}));
 
+	// Build index map
+	var indexes = {};
+	_.each(subreddits, function (subreddit) {
+		indexes[subreddit] = 0;
+	});
+	console.log(indexes);
+
+	// Get Subreddit RSS
 	Promise.map(subreddits, function (subreddit) {
 		return new Promise(function (resolve, reject) {
 			parser.parseURL('https://www.reddit.com/r/' + subreddit + '.rss', function(err, parsed) {
