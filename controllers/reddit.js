@@ -72,10 +72,12 @@ reddit.getArticles = function (req, res) {
 							// img = gifv.toString().replace('.gifv', '.mp4');
 							img = gifv;
 						} else {
-							var thumbnail_pattern = /https:\/\/[a-z]\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
-							if (thumbnail_pattern.test(entry.content)) {
-								var thumbnail = entry.content.match(thumbnail_pattern);
-								img = thumbnail;
+
+							// var thumbnail_pattern = /https:\/\/[a-z]\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
+							var imgur_pattern = /http:\/\/i\.imgur\.com\/\w+\.(jpg|png|gif|gifv)/g;
+							if (imgur_pattern.test(entry.content)) {
+								var imgur = entry.content.match(imgur_pattern);
+								img = imgur;
 							}
 						}
 
