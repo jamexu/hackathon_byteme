@@ -12,6 +12,7 @@ db.defaults({
 	scores: {}
 }).value();
 
+app.use(express.static('html'))
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	req.db = db;
