@@ -12,6 +12,7 @@ db.defaults({
 	scores: {}
 }).value();
 
+app.use(express.static('html'))
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	req.db = db;
@@ -23,8 +24,7 @@ app.get('/', function (req, res) {
 	res.send('OK');
 });
 
-
-app.get('/reddit/get/:subreddit', reddit.getArticles);
+app.get('/reddit/get', reddit.getArticles);
 app.post('/reddit/score', reddit.scoreArticle)
 
 

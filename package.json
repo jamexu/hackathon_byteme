@@ -9,7 +9,9 @@
 		"express": "4.14.0",
 		"rss-parser": "2.5.2",
 		"lowdb": "0.14.0",
-		"body-parser": "1.15.2"
+		"body-parser": "1.15.2",
+		"bluebird": "3.4.6",
+		"underscore": "1.8.3"
 	},
 	"devDependencies": {
 		"nodemon": "1.11.0"

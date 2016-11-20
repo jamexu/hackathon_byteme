@@ -2,6 +2,7 @@ var globalToastCounter = 0;
 var left;
 var isLeft;
 var touchLeft
+<<<<<<< HEAD
 $( document ).ready(function() {
     Materialize.toast("First toast",999999999,'', function(){newToast();});
     $.mobile.hidePageLoadingMsg();
@@ -10,6 +11,14 @@ $( document ).ready(function() {
 });
 
 
+=======
+
+$( document ).ready(function() {
+    Materialize.toast("First toast",999999999,'', function(){newToast();});
+});
+
+ 
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 globalToastCounter++;
 $( "#toast-container" ).mousedown(function() {
     left = $(".toast").offset().left;
@@ -52,6 +61,7 @@ function newToast(){
     }
 
 }
+<<<<<<< HEAD
 
 // setTimeout(function(){
 //     console.log("in timer");
@@ -62,3 +72,5 @@ function newToast(){
 //         console.log("toasting");
 //     }
 // }, 5000);
+=======
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4

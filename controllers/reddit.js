@@ -1,36 +1,151 @@
 var parser = require('rss-parser');
+var Promise = require('bluebird');
+var _ = require('underscore');
 var reddit = {};
 
+var subreddits = [
+	"MostBeautiful",
+	"pics",
+	"lolcats",
+	"startledcats",
+	"Demotivational",
+	"Demotivated",
+	"funnysigns",
+	"lol",
+	"actuallyfunny",
+	"animalsbeingjerks",
+	"aww",
+	"funny",
+	"mildlyinteresting",
+	"gifs",
+	"earthporn",
+	"wallpapers",
+	"cityporn",
+	"upsetcats",
+	"malelivingspace",
+	"cemeteryporn",
+	"carporn",
+	"architectureporn",
+	"culinaryporn",
+	"toolporn"
+];
+
 reddit.getArticles = function (req, res) {
-	title = "WELCOME TO /r/" + req.params.subreddit
+	var db = req.db;
 
-	parser.parseURL('https://www.reddit.com/r/' + req.params.subreddit + '.rss', function(err, parsed) {
-		  largeString = ''
-			count = 0
+	// SHIFT SCORE
+	var scores = db.get('scores').value();
+	var min = _.min(_.map(subreddits, function (subreddit) {
+		var score = db.get('scores.' + subreddit).value();
+		if (!isNumber(score)) {
+			score = 0;
+		}
+		return score;
+	}));
 
-			parsed.feed.entries.forEach(function(entry) {
-				  count += 1
-					var entryTitle = entry.title
-					var url = entry.link
-					largeString += '<a href="' + url + '">' + entryTitle + '</a><br><br>'
+	var floor = 0;
+	if (min <= 0) {
+		floor = -1 * min + 1;
+	}
 
-					var gifv_pattern = /http:\/\/i\.imgur\.com\/(\w|_|-)+\.gifv/g;
-					if (gifv_pattern.test(entry.content)) {
-							var gifv = entry.content.match(gifv_pattern)
-							console.log('gifv ' + gifv)
-							largeString += '<video preload="auto" autoplay="autoplay" loop="loop" style="width: 200px; height: 200px;"><source src="' + gifv.toString().replace('.gifv', '.mp4') + '" type="video/mp4"></source></video><br><br>'
-					}
-					else {
-							var thumbnail_pattern = /https:\/\/[a-z]\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
-							if (thumbnail_pattern.test(entry.content)) {
-									var thumbnail = entry.content.match(thumbnail_pattern)
-									largeString += '<img src="' + thumbnail + '" alt="' + entryTitle + '"><br><br>'
+	var histogram = _.flatten(_.map(subreddits, function (subreddit) {
+		var arr = []
+		var score = db.get('scores.' + subreddit).value();
+
+		if (!isNumber(score)) {
+			score = 0;
+		}
+
+		score += floor;
+
+		for (i = 0; i < score; i++) {
+			arr.push(subreddit)
+		}
+		return arr
+	}));
+
+	// Build index map
+	var indexes = {};
+	_.each(subreddits, function (subreddit) {
+		indexes[subreddit] = 0;
+	});
+
+	// Get Subreddit RSS
+	Promise.map(subreddits, function (subreddit) {
+		return new Promise(function (resolve, reject) {
+			parser.parseURL('https://www.reddit.com/r/' + subreddit + '.rss', function(err, parsed) {
+				if (err) {
+					reject();
+				} else {
+					var data = _.reject(_.map(parsed.feed.entries, function (entry) {
+						var img = null;
+
+						var gifv_pattern = /http:\/\/i\.imgur\.com\/(\w|_|-)+\.gifv/g;
+						if (gifv_pattern.test(entry.content)) {
+							var gifv = entry.content.match(gifv_pattern);
+							// img = gifv.toString().replace('.gifv', '.mp4');
+							img = gifv;
+						} else {
+
+							// var thumbnail_pattern = /https:\/\/[a-z]\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
+							var imgur_pattern = /http:\/\/i\.imgur\.com\/\w+\.(jpg|png|gif|gifv)/g;
+							if (imgur_pattern.test(entry.content)) {
+								var imgur = entry.content.match(imgur_pattern);
+								img = imgur;
 							}
-					}
-			})
-			res.send(title + '<br>Parsed ' + count + ' images. <br><br>' + largeString)
-	})
+						}
 
+						if (!img) {
+							return null;
+						}
+
+						return {
+							title: entry.title,
+							url: entry.link,
+							img: img[0],
+							subreddit: subreddit
+						}
+					}), function (item) {
+						return item === null;
+					});
+
+					resolve({
+						subreddit: subreddit,
+						data: data
+					});
+				}
+			});
+		});
+
+	}).then(function (parsed) {
+		var subreddits = {};
+
+		_.each(parsed, function (parseObj) {
+			subreddits[parseObj.subreddit] = parseObj.data;
+		});
+
+		return subreddits;
+
+	}).then(function (subreddits) {
+		var data = [];
+
+		while (true) {
+			var min = 0;
+			var max = histogram.length - 1;
+			var randInt = Math.floor(Math.random() * (max - min + 1)) + min;
+			var currentSubreddit = histogram[randInt];
+			var index = indexes[currentSubreddit];
+			var item = subreddits[currentSubreddit][index];
+
+			if (!item) {
+				break;
+			}
+			indexes[currentSubreddit]++;
+			data.push(item);
+		}
+
+		res.send(data);
+	});
 };
 
 reddit.scoreArticle = function (req, res) {

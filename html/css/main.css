@@ -3,7 +3,10 @@ h1{
 }
 body{
     margin: 5em;
+<<<<<<< HEAD
     max-height: 300px;
+=======
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 }
 .cloud{
     color: darkblue;
@@ -49,6 +52,7 @@ body{
 h2{
     text-align: center !important;
 }
+<<<<<<< HEAD
 .ui-focus,
 .ui-btn:focus {
     -moz-box-shadow: none !important;
@@ -64,4 +68,10 @@ body:active, body:focus{
 }
 .ui-loader {
   display:none !important;
+=======
+.ui-focus {
+ -moz-box-shadow: none !important;
+ -webkit-box-shadow: none !important;
+ box-shadow: none !important;
+>>>>>>> 54524df7fdd743ae5525962eb273282352f81fd4
 }
