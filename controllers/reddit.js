@@ -93,6 +93,14 @@ reddit.getArticles = function (req, res) {
 			});
 		});
 	}).then(function (parsed) {
+		var subreddits = {};
+
+		_.each(parsed, function (parseObj) {
+			subreddits[parseObj.subreddit] = parseObj.data;
+		});
+
+		return subreddits;
+	}).then(function (subreddits) {
 		min = 0;
 		max = histogram.length
 		randInt = Math.floor(Math.random() * (max - min + 1)) + min;
