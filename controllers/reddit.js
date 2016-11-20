@@ -86,7 +86,8 @@ reddit.getArticles = function (req, res) {
 						return {
 							title: entry.title,
 							url: entry.link,
-							img: img[0]
+							img: img[0],
+							subreddit: subreddit
 						}
 					}), function (item) {
 						return item === null;
