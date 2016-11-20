@@ -69,7 +69,8 @@ reddit.getArticles = function (req, res) {
 						var gifv_pattern = /http:\/\/i\.imgur\.com\/(\w|_|-)+\.gifv/g;
 						if (gifv_pattern.test(entry.content)) {
 							var gifv = entry.content.match(gifv_pattern);
-							img = gifv.toString().replace('.gifv', '.mp4');
+							// img = gifv.toString().replace('.gifv', '.mp4');
+							img = gifv;
 						} else {
 							var thumbnail_pattern = /https:\/\/[a-z]\.thumbs\.redditmedia\.com\/(\w|_|-)+\.jpg/g;
 							if (thumbnail_pattern.test(entry.content)) {
@@ -92,6 +93,7 @@ reddit.getArticles = function (req, res) {
 				}
 			});
 		});
+
 	}).then(function (parsed) {
 		var subreddits = {};
 
@@ -100,11 +102,18 @@ reddit.getArticles = function (req, res) {
 		});
 
 		return subreddits;
+
 	}).then(function (subreddits) {
 		min = 0;
-		max = histogram.length
+		max = histogram.length;
 		randInt = Math.floor(Math.random() * (max - min + 1)) + min;
-		console.log('randInt ' + randInt)
+		currentSubreddit = histogram[randInt];
+		data = subreddits[currentSubreddit]
+
+		// console.log('randInt ' + randInt);
+		// console.log('histogram ' + histogram);
+		// console.log('current Subreddit ' + currentSubreddit)
+		// console.log('data ', data)
 	});
 };
 
